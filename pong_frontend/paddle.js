@@ -5,13 +5,14 @@ function Paddle(){
   this.padrightx = width - 15
   this.padrighty = 50
 
-  this.padwidth = 10
+  this.padwidth = 5
   this.padheight = 70
 
   this.yDirectionLeft = 0
   this.yDirectionRight = 0
 
-
+  this.movingLeft = []
+  this.movingRight = []
 
 
   this.showPadLeft = (e => {
@@ -28,19 +29,20 @@ function Paddle(){
   })
 
   this.setLeftPaddle = (direction => {
-    this.yDirectionLeft = direction
+    this.movingLeft.push(this.yDirectionLeft = direction)
+
   })
 
   this.moveLeftPaddle = (direction => {
-    this.padlefty += this.yDirectionLeft * 8
+    this.padlefty += direction * 8
   })
 
   this.setRightPaddle = (direction => {
-    this.yDirectionRight = direction
+    this.movingRight.push(this.yDirectionRight = direction)
   })
 
   this.moveRightPaddle = (direction => {
-    this.padrighty += this.yDirectionRight * 8
+    this.padrighty += direction * 8
   })
 
   this.stopLeftPaddle = (e => {
