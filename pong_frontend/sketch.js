@@ -9,7 +9,7 @@ function preload(){
 }
 
 function setup() {
-	createCanvas(windowWidth/2, windowHeight/2);
+	createCanvas(windowWidth/2, windowHeight/1.7);
 	leftPaddle = new Paddle()
 	rightPaddle = new Paddle()
 	ball = new Ball(leftPaddle, rightPaddle)

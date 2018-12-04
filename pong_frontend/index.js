@@ -10,15 +10,17 @@ function Index(){
   }
 
   document.addEventListener('DOMContentLoaded', e =>{
-
-    let container = document.getElementById('canvas-container')
-    // container.innerHTML = canvas
+    let canvas = document.getElementsByTagName('canvas')
+    let container = document.getElementById('container')
+    container.innerHTML = canvas
+    
+    // this.grabCanvas(false)
 
 
   })
 
 
 
-  this.grabCanvas(false)
-  // this.grabCanvas(true)
+   this.grabCanvas(true)
+
 }

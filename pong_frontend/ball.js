@@ -3,8 +3,8 @@ function Ball(leftPaddle, rightPaddle){
   this.x = width/2
   this.y = height/2
   this.radius = 10
-  this.xspeed = 6
-  this.yspeed = 7
+  this.xspeed = 8
+  this.yspeed = 9
 
   this.showBall = (e => {
     ellipse(this.x, this.y, this.radius*2, this.radius*2)
