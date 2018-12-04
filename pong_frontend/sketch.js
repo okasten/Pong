@@ -2,13 +2,18 @@ var leftPaddle
 var rightPaddle
 var ball
 var keyLeft
+var index
 
+function preload(){
+
+}
 
 function setup() {
-	createCanvas(windowWidth*.7, windowHeight/2);
+	createCanvas(windowWidth/2, windowHeight/2);
 	leftPaddle = new Paddle()
 	rightPaddle = new Paddle()
 	ball = new Ball(leftPaddle, rightPaddle)
+	index = new Index()
 
 }
 
@@ -29,8 +34,6 @@ function draw() {
 	for(let i = 0; i < rightPaddle.movingRight.length; i++){
 		rightPaddle.moveRightPaddle(rightPaddle.movingRight[i])
 	}
-
-	console.log(leftPaddle.movingLeft)
 
 }
 

@@ -3,16 +3,18 @@ function Ball(leftPaddle, rightPaddle){
   this.x = width/2
   this.y = height/2
   this.radius = 10
-  this.xspeed = -5
-  this.yspeed = 4
+  this.xspeed = 6
+  this.yspeed = 7
 
   this.showBall = (e => {
     ellipse(this.x, this.y, this.radius*2, this.radius*2)
   })
 
   this.moveBall = (e => {
+
     this.x += this.xspeed
     this.y += this.yspeed
+
 
     if(this.y <= this.radius){
       this.yspeed *= -1
