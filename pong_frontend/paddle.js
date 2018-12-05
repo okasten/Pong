@@ -6,7 +6,7 @@ function Paddle(){
   this.padrighty = 50
 
   this.padwidth = 5
-  this.padheight = 70
+  this.padheight = 80
 
   this.yDirectionLeft = 0
   this.yDirectionRight = 0
@@ -14,6 +14,7 @@ function Paddle(){
   this.movingLeft = []
   this.movingRight = []
 
+  this.aiSpeed = 6;
 
   this.showPadLeft = (e => {
     fill(255, 255, 255)
@@ -34,7 +35,7 @@ function Paddle(){
   })
 
   this.moveLeftPaddle = (direction => {
-    this.padlefty += direction * 8
+    this.padlefty += direction * 9
   })
 
   this.setRightPaddle = (direction => {
@@ -42,7 +43,7 @@ function Paddle(){
   })
 
   this.moveRightPaddle = (direction => {
-    this.padrighty += direction * 8
+    this.padrighty += direction * 9
   })
 
   this.stopLeftPaddle = (e => {
@@ -60,5 +61,18 @@ function Paddle(){
       this.padrighty = this.padheight/2
     }
   })
+
+  this.aiPlayer = ((ball,aiPlayer)=>{
+    if(aiPlayer){
+      if(ball.x >= width/2){
+        if(ball.y < this.padrighty){
+          this.padrighty -= this.aiSpeed
+        }else if(ball.y > this.padrighty){
+          this.padrighty += this.aiSpeed
+        }
+      }
+    }
+  })
+
 
 }
