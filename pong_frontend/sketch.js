@@ -28,6 +28,7 @@ function draw() {
 	ball.showBall()
 	ball.moveBall()
 	rightPaddle.aiPlayer(ball,true)
+	leftPaddle.aiPlayer(ball,true)
 	// frameRate(10)
 	for(let i = 0; i < leftPaddle.movingLeft.length; i++){
 		leftPaddle.moveLeftPaddle(leftPaddle.movingLeft[i])

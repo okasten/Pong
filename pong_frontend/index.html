@@ -19,11 +19,11 @@
 
 
 </head>
-<body class="has-background-grey" style="height: -webkit-fill-available;">
+<body class="has-background-light-grey" style="height: -webkit-fill-available;">
 	<nav class="navbar is-link" role="navigation" aria-label="main navigation">
 	  <div class="navbar-brand">
-	    <a class="navbar-item" href="https://bulma.io">
-	      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+	    <a class="navbar-item" href="#">
+	      <img src="https://images-na.ssl-images-amazon.com/images/I/71yv6Eahe5L.png" width="90" height="100px">
 	    </a>
 
 	    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -35,16 +35,16 @@
 
 	  <div id="navbarBasicExample" class="navbar-menu">
 	    <div class="navbar-start">
-	      <a class="navbar-item">
+	      <a class="navbar-item" id="home">
 	        Home
 	      </a>
 
-	      <a class="navbar-item">
-	        Documentation
+	      <a class="navbar-item" id="leaderboard">
+	        Leaderboard
 	      </a>
 
 	      <div class="navbar-item has-dropdown is-hoverable">
-	        <a class="navbar-link">
+	        <!-- <a class="navbar-link">
 	          More
 	        </a>
 
@@ -62,17 +62,17 @@
 	          <a class="navbar-item">
 	            Report an issue
 	          </a>
-	        </div>
+	        </div> -->
 	      </div>
 	    </div>
 
 	    <div class="navbar-end">
 	      <div class="navbar-item">
 	        <div class="buttons">
-	          <a class="button is-primary">
+	          <a class="button is-primary" id='sign-up'>
 	            <strong>Sign up</strong>
 	          </a>
-	          <a class="button is-light">
+	          <a id="logIn" data-id="" class="button is-light">
 	            Log in
 	          </a>
 	        </div>
@@ -81,8 +81,15 @@
 	  </div>
 	</nav>
 
-	<div class="container" id="container">
-		<h1>Welcome to Pong!</h1>
+	<div class="container-all" id="container-all">
+
+		<div class="sign-up"></div>
+		<div class="log-in"></div>
+		<div class="leaderboard" style="align: center;"></div>
+		<div class="stats"></div>
+	</div>
+	</div>
+
 	</div>
 
 

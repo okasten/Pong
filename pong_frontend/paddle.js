@@ -16,6 +16,7 @@ function Paddle(){
 
   this.aiSpeed = 6;
 
+
   this.showPadLeft = (e => {
     fill(255, 255, 255)
     rectMode(CENTER)
@@ -47,11 +48,12 @@ function Paddle(){
   })
 
   this.stopLeftPaddle = (e => {
-    if(this.padlefty + this.padheight/2 >= height){
-      this.padlefty = height - this.padheight/2
-    } else if (this.padlefty - this.padheight/2 <= 0){
-      this.padlefty = this.padheight/2
-    }
+    // if(this.padlefty + this.padheight/2 >= height){
+    //   this.padlefty = height - this.padheight/2 -10
+    // } else if (this.padlefty - this.padheight/2 <= 0){
+    //   this.padlefty = this.padheight/2
+    // }
+    this.padlefty = constrain(this.padlefty, this.padheight/2, height - this.padheight/2)
   })
 
   this.stopRightPaddle = (e => {
@@ -69,6 +71,26 @@ function Paddle(){
           this.padrighty -= this.aiSpeed
         }else if(ball.y > this.padrighty){
           this.padrighty += this.aiSpeed
+        }
+      }
+      if(ball.x <= width/2){
+        if(ball.y < this.padlefty){
+          this.padlefty -= this.aiSpeed
+        }else if(ball.y > this.padlefty){
+          this.padlefty += this.aiSpeed
+        }
+      }
+    }
+  })
+
+  
+  this.aiPlayerLeft = ((ball,aiPlayer)=>{
+    if(aiPlayer){
+      if(ball.x <= width/2){
+        if(ball.y < this.padlefty){
+          this.padlefty -= this.aiSpeedLeft
+        }else if(ball.y > this.padlefty){
+          this.padlefty += this.aiSpeedLeft
         }
       }
     }
