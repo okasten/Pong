@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   # resources :player do
   #   resources :game
   # end
-  resources :players
+  get '/players/:username/:email', to: 'players#show'
+
+  resources :players, only: [:index, :update, :create, :destroy]
+
 end

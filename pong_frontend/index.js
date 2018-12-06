@@ -27,11 +27,11 @@ function Index(){
       <div class="stats"></div>`
   }
 
-  document.getElementById('home').addEventListener('click', e => {
-    reset()
-    this.grabCanvas(true)
-
-  })
+  // document.getElementById('home').addEventListener('click', e => {
+  //   reset()
+  //   this.grabCanvas(true)
+  //
+  // })
 
   document.getElementById('sign-up').addEventListener('click', e => {
     this.grabCanvas(false)
@@ -91,53 +91,94 @@ function Index(){
 
   function playerShowPage(player){
     reset()
-    document.getElementById('sign-up').remove()
+    if(player.games === null || player.games.length === 0){
+      reset()
+      document.getElementsByClassName('stats')[0].innerHTML = `<h1>No Previously Played Games</h1>`
+    } else {
+      displayPlayer(player)
+    }
+    if(document.getElementById('sign-up') != null){document.getElementById('sign-up').remove()}
     let logOut = document.getElementById('logIn')
     logOut.innerText = "Log Out"
     logOut.dataset.id = player.id
-    let navbar = document.getElementById('navbarBasicExample')
-    navbar.firstElementChild.innerHTML += `<a class="navbar-item" id="profile">
+    let navbar = document.getElementsByClassName('navbar-start')[0]
+    navbar.lastElementChild.innerHTML = `<a class="navbar-item" data-email="${player.email}" data-username="${player.username}" id="profile" style="color: white;">
+      Stats
+    </a>
+    <a class="navbar-item" data-email="${player.email}" data-name="${player.name}" data-username="${player.username}" data-id="${player.id}" id="editProfile" style="color: white;">
       Profile
-    </a>`
-    displayPlayer(player)
+    </a>
+    <a class="navbar-link">
+      Play Pong
+    </a>
+
+    <div class="navbar-dropdown">
+      <a data-email="${player.email}" data-name="${player.name}" data-username="${player.username}" data-id="${player.id}" id="1player" class="navbar-item">
+        1 Player
+      </a>
+      <a data-email="${player.email}" data-name="${player.name}" data-username="${player.username}" data-id="${player.id}" id="2player" class="navbar-item">
+        2 Players
+      </a>
+    </div>`
   }
 
   function displayPlayer(player){
-    debugger
+    reset()
     let stats = document.getElementsByClassName('stats')[0]
     stats.innerHTML = `<table class="leaderTable" id="leaderTable" style="color:blue;">
       <th class="table-head">Games</th>
-      <th class="table-head">Player Score</th>
-      <th class="table-head">Opponent Score</th>
+      <th class="table-head">Player 1 score</th>
+      <th class="table-head">Player 2 Score</th>
       <th class="table-head">Ballspeed</th>
       <th class="table-head">Game Length (Points)</th>
       <th class="table-head">Winner</th>
     </table>`
-
+    let counter = 1
     for(game of player.games){
-      debugger
-      let row = stats.insertRow(-1)
+      let row = stats.firstElementChild.insertRow(-1)
       row.insertCell(0).innerHTML = counter++
       row.insertCell(1).innerHTML = game.p1_score
       row.insertCell(2).innerHTML = game.p2_score
       row.insertCell(3).innerHTML = game.ballspeed
       row.insertCell(4).innerHTML = game.points_to_win
       row.insertCell(5).innerHTML = game.winner
-
     }
+
 
   }
 
   document.getElementById('logIn').addEventListener('click', e => {
-    reset()
-    this.grabCanvas(false)
-    logIn()
-
+    if(e.target.innerText === "Log In"){
+      reset()
+      this.grabCanvas(false)
+      logIn()
+    } else if(e.target.innerText === "Log Out"){
+      reset()
+      this.grabCanvas(true)
+      logOutNavBar()
+    }
   })
+
+  function logOutNavBar(){
+    let navbar = document.getElementById('navbarBasicExample')
+    document.getElementById('profile').remove()
+    navbar.lastElementChild.innerHTML = `<div class="navbar-item">
+      <div class="buttons">
+        <a class="button is-primary" id='sign-up'>
+          <strong>Sign up</strong>
+        </a>
+        <a id="logIn" data-id=" " class="button is-light">
+          Log In
+        </a>
+      </div>
+    </div>`
+
+    location.reload()
+  }
 
   function logIn(){
     reset()
-    const logInForm = `<form>
+    const logInForm = `<form id="log_in_form" action="#show">
       <div class="container">
         <label for="uname"><b>Username</b></label>
         <input id="log-in-username" type="text" placeholder="Enter Username" name="username" required>
@@ -157,7 +198,7 @@ function Index(){
     </form>`
 
     document.querySelector('.log-in').innerHTML = logInForm
-    document.addEventListener('submit', e =>{
+    document.getElementById('log_in_form').addEventListener('submit', e =>{
       e.preventDefault()
       logInUser(e)
     })
@@ -170,9 +211,15 @@ function Index(){
   }
 
   function fetchSingleUser(username, email){
-    fetch(`http:localhost:3000/players?email=${email}&username=${username}`)
+    fetch(`http:localhost:3000/players/${username}/${email}`)
     .then(response => response.json())
-    .then(console.log)
+    .then(player => {
+      if(player === null){
+        document.getElementsByClassName('log-in')[0].nextElementSibling.innerHTML = `<h1 style="color:red; text-align: center;">Invalid username or email. Please try again or sign up. </h1>`
+      } else {
+        playerShowPage(player)
+      }
+    })
   }
 
   document.addEventListener('click', e => {
@@ -182,11 +229,77 @@ function Index(){
     }
   })
 
-  document.getElementById('leaderboard').addEventListener('click', e => {
-    reset()
-    this.grabCanvas(false)
-    getFullFetch()
+  document.addEventListener('click', e =>{
+
+    if(e.target.id === "leaderboard"){
+      reset()
+      this.grabCanvas(false)
+      getFullFetch()
+    } else if(e.target.id === "home"){
+      reset()
+      this.grabCanvas(true)
+    } else if(e.target.id === "profile"){
+      this.grabCanvas(false)
+      fetchSingleUser(e.target.dataset.username, e.target.dataset.email)
+    } else if(e.target.id === "editProfile"){
+      this.grabCanvas(false)
+      reset()
+      editProfilePage(e)
+    } else if(e.target.id === "1player"){
+      console.log(e.target.dataset)
+    } else if(e.target.id === "2player"){
+      console.log(e.target.dataset)
+    }
   })
+
+  function editProfilePage(player){
+    let newForm = `<form id="edit-form">
+      <div class="container">
+        <h1>Edit</h1>
+        <hr>
+
+        <label for="email"><b>Email</b></label>
+        <input id="edit-email" type="text" value="${player.target.dataset.email}" name="email" required>
+
+        <label for="username"><b>Username</b></label>
+        <input id="edit-username" type="text" value="${player.target.dataset.username}" name="username" required>
+
+        <label for="name"><b>Name</b></label>
+        <input id="edit-name" type="text" value="${player.target.dataset.name}" name="name" required>
+        <hr>
+
+        <button type="submit" class="updatebtn">Update</button>
+      </div>
+      </form>`
+    document.getElementsByClassName('sign-up')[0].innerHTML = newForm
+
+    document.getElementById('edit-form').addEventListener('submit', e =>{
+      e.preventDefault()
+      playerUpdate(player.target.dataset)
+    })
+  }
+
+  function playerUpdate(player){
+    let name = document.getElementById('edit-name').value
+    let username = document.getElementById('edit-username').value
+    let email = document.getElementById('edit-email').value
+    let id = player.id
+    let playerInfo = {name: name, username: username, email: email}
+    playerUpdateFetch(playerInfo, id)
+  }
+
+  function playerUpdateFetch(playerInfo, id){
+    fetch(`http://localhost:3000/players/${id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(playerInfo)
+    })
+    .then(response => response.json())
+    .then(playerShowPage)
+  }
+
 
   function getFullFetch() {
     fetch("http://localhost:3000/players")
@@ -208,10 +321,11 @@ function Index(){
     let sortedPlayers = players.sort(compare)
     let counter = 1
     for(player of sortedPlayers){
+      let percent = Math.floor((player.games_won / (player.games_lost + player.games_won) * 100))
       let row = leaderTable.insertRow(-1)
       row.insertCell(0).innerHTML = counter++
       row.insertCell(1).innerHTML = player.username
-      row.insertCell(2).innerHTML = `${Math.floor((player.games_won / (player.games_lost + player.games_won) * 100))}%`
+      row.insertCell(2).innerHTML = isNaN(percent) ? "0%" : `${percent}%`
       row.insertCell(3).innerHTML = player.games_won
       row.insertCell(4).innerHTML = player.games_lost
 

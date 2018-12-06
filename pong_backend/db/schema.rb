@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2018_12_03_173246) do
     t.string "name"
     t.string "email"
     t.string "username"
-    t.integer "games_won"
-    t.integer "games_lost"
+    t.integer "games_won", default: 0
+    t.integer "games_lost", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
