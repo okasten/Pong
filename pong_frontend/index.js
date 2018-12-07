@@ -1,7 +1,7 @@
 
 function Index(leftPaddle, rightPaddle, ball, scorecard){
   const sketch = require(['sketch'])
-
+  var timer = 5
   this.grabCanvas = function(showing=false) {
     let canvas = document.getElementsByTagName('canvas')[0];
     console.log(canvas)

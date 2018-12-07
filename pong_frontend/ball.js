@@ -48,7 +48,7 @@ function Ball(scorecard, leftPaddle, rightPaddle){
           let playerOneScore = document.getElementById('player1score').innerText
           document.getElementById('player1score').innerText = 0
           document.getElementById('player2score').innerText = 0
-          postScore(data, parseInt(playerOneScore), parseInt(player2score), player1Won)
+          postScore(data, parseInt(playerOneScore), parseInt(++player2score), player1Won)
 
         }
       }
@@ -65,7 +65,7 @@ function Ball(scorecard, leftPaddle, rightPaddle){
           let playerOneScore = document.getElementById('player1score').innerText
           document.getElementById('player1score').innerText = 0
           document.getElementById('player2score').innerText = 0
-          postScore(data, parseInt(playerOneScore), parseInt(player2score), player1Won)
+          postScore(data, parseInt(++playerOneScore), parseInt(player2score), player1Won)
         }
       }
     }

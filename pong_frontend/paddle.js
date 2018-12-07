@@ -37,7 +37,7 @@ function Paddle(){
   })
 
   this.moveLeftPaddle = (direction => {
-    this.padlefty += direction * 9
+    this.padlefty += direction * 10
   })
 
   this.setRightPaddle = (direction => {
@@ -45,7 +45,7 @@ function Paddle(){
   })
 
   this.moveRightPaddle = (direction => {
-    this.padrighty += direction * 9
+    this.padrighty += direction * 10
   })
 
   this.stopLeftPaddle = (e => {

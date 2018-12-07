@@ -13,7 +13,8 @@ function Scorecard(){
       playerscores = `<h1 style="text-align: center; font-size: 30px; color: blue;">2 Player Mode</h1></br><hr>
       <h1 style="color: green; font-size: 40px; text-align: center; font-weight: bold;">${e.name}: <span id="player1score" data-username="${e.username}" data-id="${e.id}" data-email="${e.email}"> 0 </span>
        <span style="color: blue;"> | </span>
-       <span>Player 2: </span><span id="player2score"> 0 </span></h1>`
+       <span>Player 2: </span><span id="player2score"> 0 </span></h1>
+       <h4 style="color: red; text-align: center;">Controls for Player 2: Move Up = e, Move Down = d</h4>`
     }
   // })
   //
