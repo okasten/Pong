@@ -1,4 +1,6 @@
-function Index(){
+
+function Index(leftPaddle, rightPaddle, ball, scorecard){
+  const sketch = require(['sketch'])
 
   this.grabCanvas = function(showing=false) {
     let canvas = document.getElementsByTagName('canvas')[0];
@@ -24,7 +26,8 @@ function Index(){
       <div class="log-in"></div>
       <div class="leaderboard" style="align: center;">
       </div>
-      <div class="stats"></div>`
+      <div class="stats"></div>
+      <div class="scorecard" id="scorekeeper" data-id=" "></div>`
   }
 
   // document.getElementById('home').addEventListener('click', e => {
@@ -32,34 +35,34 @@ function Index(){
   //   this.grabCanvas(true)
   //
   // })
+  if(document.getElementById('sign-up') != null){
+      document.getElementById('sign-up').addEventListener('click', e => {
+        this.grabCanvas(false)
+        reset()
+        let newForm = `<form id="sign-up-form">
+      <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
 
-  document.getElementById('sign-up').addEventListener('click', e => {
-    this.grabCanvas(false)
-    reset()
-    let newForm = `<form id="sign-up-form">
-  <div class="container">
-    <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
-    <hr>
+        <label for="email"><b>Email</b></label>
+        <input id="sign-up-email" type="text" placeholder="Enter Email" name="email" required>
 
-    <label for="email"><b>Email</b></label>
-    <input id="sign-up-email" type="text" placeholder="Enter Email" name="email" required>
+        <label for="username"><b>Username</b></label>
+        <input id="sign-up-username" type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="username"><b>Username</b></label>
-    <input id="sign-up-username" type="text" placeholder="Enter Username" name="username" required>
+        <label for="name"><b>Name</b></label>
+        <input id="sign-up-name" type="text" placeholder="Enter Name" name="name" required>
+        <hr>
 
-    <label for="name"><b>Name</b></label>
-    <input id="sign-up-name" type="text" placeholder="Enter Name" name="name" required>
-    <hr>
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <button type="submit" class="registerbtn">Register</button>
+      </div>
 
-    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-    <button type="submit" class="registerbtn">Register</button>
-  </div>
-
-  <div class="container signin">
-    <p>Already have an account? <a id="sign-in-again" href="#">Sign in</a>.</p>
-  </div>
-</form>`
+      <div class="container signin">
+        <p>Already have an account? <a id="sign-in-again" href="#">Sign in</a>.</p>
+      </div>
+    </form>`
 
     document.getElementsByClassName('sign-up')[0].innerHTML = newForm
     document.getElementById('sign-up-form').addEventListener('submit', e => {
@@ -76,6 +79,7 @@ function Index(){
     })
 
   })
+}
 
   function fetchCreatePlayer(playerData){
     fetch("http://localhost:3000/players", {
@@ -237,6 +241,8 @@ function Index(){
       getFullFetch()
     } else if(e.target.id === "home"){
       reset()
+      PLAYER_CONFIG.leftPaddle = true
+      PLAYER_CONFIG.rightPaddle = true
       this.grabCanvas(true)
     } else if(e.target.id === "profile"){
       this.grabCanvas(false)
@@ -246,11 +252,40 @@ function Index(){
       reset()
       editProfilePage(e)
     } else if(e.target.id === "1player"){
-      console.log(e.target.dataset)
+      reset()
+      this.grabCanvas(true)
+      onePlayerMode(e)
     } else if(e.target.id === "2player"){
-      console.log(e.target.dataset)
+      reset()
+      this.grabCanvas(true)
+      twoPlayerMode(e)
     }
   })
+
+  function onePlayerMode(e){
+    scorecard.addScoreCard(e.target.dataset)
+
+    // PLAYER_CONFIG.leftPaddle = true
+    // PLAYER_CONFIG.rightPaddle = false
+    PLAYER_ONE = false;
+    PLAYER_TWO = true;
+  }
+
+
+  function twoPlayerMode(e){
+    scorecard.addScoreCard(e.target.dataset)
+
+    // PLAYER_CONFIG.leftPaddle = false
+    // PLAYER_CONFIG.rightPaddle = false
+    PLAYER_ONE = false;
+    PLAYER_TWO = false;
+  }
+
+  // function start1player(){
+  //
+  //   let canvas = document.getElementById('defaultCanvas0')
+  //
+  // }
 
   function editProfilePage(player){
     let newForm = `<form id="edit-form">

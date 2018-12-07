@@ -1,4 +1,5 @@
 function Paddle(){
+
   this.padleftx = 15
   this.padlefty = 50
 
@@ -83,7 +84,7 @@ function Paddle(){
     }
   })
 
-  
+
   this.aiPlayerLeft = ((ball,aiPlayer)=>{
     if(aiPlayer){
       if(ball.x <= width/2){
