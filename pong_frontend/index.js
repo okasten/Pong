@@ -99,7 +99,7 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
     reset()
     if(player.games === null || player.games.length === 0 || player.games === undefined){
       reset()
-      document.getElementsByClassName('stats')[0].innerHTML = `<h1>No Previously Played Games</h1>`
+      document.getElementsByClassName('stats')[0].innerHTML = `<h1 style="color: white; text-align: center; padding-top: 60px;">No Previously Played Games</h1>`
     } else {
       displayPlayer(player)
     }
@@ -297,7 +297,7 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   function editProfilePage(player){
     let newForm = `<form id="edit-form">
       <div class="container">
-        <h1 style="color: white;">Edit</h1>
+        <h1 style="color: white;">Edit Your Profile</h1>
         <hr>
 
         <label for="email"><b>Email</b></label>
@@ -375,10 +375,16 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   }
 
   function compare(a, b) {
-    const scoreA = a.games_won - a.games_lost
-    const scoreB = b.games_won - b.games_lost
+    let scoreA = (a.games_won/(a.games_won + a.games_lost))
+    let scoreB = (b.games_won/(b.games_won + b.games_lost))
+    if(isNaN(scoreA)){
+      scoreA = 0
+    } else if (isNaN(scoreB)){
+      scoreB = 0
+    }
 
     let comparison = 0;
+
     if (scoreA < scoreB) {
       comparison = 1;
     } else if (scoreA > scoreB) {
