@@ -39,7 +39,7 @@ function Ball(scorecard, leftPaddle, rightPaddle){
 
       if(document.getElementById('player2score') != null){
         let player2score = document.getElementById('player2score').innerText
-        if(parseInt(player2score) < 10){
+        if(parseInt(player2score) < 9){
             document.getElementById('player2score').innerText = `${parseInt(++player2score)}`
         } else {
           player1Won = false
@@ -56,7 +56,7 @@ function Ball(scorecard, leftPaddle, rightPaddle){
     } else{
       if(document.getElementById('player1score') != null){
         let player1score = document.getElementById('player1score').innerText
-        if(parseInt(player1score) < 10){
+        if(parseInt(player1score) < 9){
           document.getElementById('player1score').innerText = `${parseInt(++player1score)}`
         } else {
           player1Won = true
