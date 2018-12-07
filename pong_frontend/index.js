@@ -22,7 +22,9 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   })
 
   function reset(){
-    document.getElementById('container-all').innerHTML = `<div class="sign-up"></div>
+    document.getElementById('container-all').innerHTML = `
+      <div style="text-align: center;" id="welcome"></div>
+      <div class="sign-up"></div>
       <div class="log-in"></div>
       <div class="leaderboard" style="align: center;">
       </div>
@@ -41,8 +43,8 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
         reset()
         let newForm = `<form id="sign-up-form">
       <div class="container">
-        <h1>Register</h1>
-        <p>Please fill in this form to create an account.</p>
+        <h1 style="color: white;">Register</h1>
+        <p style="color: white;">Please fill in this form to create an account.</p>
         <hr>
 
         <label for="email"><b>Email</b></label>
@@ -55,7 +57,7 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
         <input id="sign-up-name" type="text" placeholder="Enter Name" name="name" required>
         <hr>
 
-        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <p style="color: white;">By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
         <button type="submit" class="registerbtn">Register</button>
       </div>
 
@@ -130,12 +132,12 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
     reset()
     let stats = document.getElementsByClassName('stats')[0]
     stats.innerHTML = `<table class="leaderTable" id="leaderTable" style="color:blue;">
-      <th class="table-head">Games</th>
-      <th class="table-head">Player 1 score</th>
-      <th class="table-head">Player 2 Score</th>
-      <th class="table-head">Ballspeed</th>
-      <th class="table-head">Game Length (Points)</th>
-      <th class="table-head">Winner</th>
+      <th class="table-head" style="color: white;">Games</th>
+      <th class="table-head" style="color: white;">Player 1 score</th>
+      <th class="table-head" style="color: white;">Player 2 Score</th>
+      <th class="table-head" style="color: white;">Ballspeed</th>
+      <th class="table-head" style="color: white;">Game Length (Points)</th>
+      <th class="table-head" style="color: white;">Result</th>
     </table>`
     let counter = 1
     for(game of player.games){
@@ -240,7 +242,10 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
       this.grabCanvas(false)
       getFullFetch()
     } else if(e.target.id === "home"){
+      // debugger
       reset()
+      document.getElementById('welcome').innerHTML = `<h1 style="padding-top: 30px; color: blue; font-weight: bolder; font-size: 50px;">Welcome to Pong!</h1>`
+
       PLAYER_ONE = true
       PLAYER_TWO = true
       this.grabCanvas(true)
@@ -263,22 +268,24 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   })
 
   function onePlayerMode(e){
-    scorecard.addScoreCard(e.target.dataset)
 
     // PLAYER_CONFIG.leftPaddle = true
     // PLAYER_CONFIG.rightPaddle = false
     PLAYER_ONE = false;
     PLAYER_TWO = true;
+    scorecard.addScoreCard(e.target.dataset)
+
   }
 
 
   function twoPlayerMode(e){
-    scorecard.addScoreCard(e.target.dataset)
+
 
     // PLAYER_CONFIG.leftPaddle = false
     // PLAYER_CONFIG.rightPaddle = false
     PLAYER_ONE = false;
     PLAYER_TWO = false;
+    scorecard.addScoreCard(e.target.dataset)
   }
 
   // function start1player(){
@@ -290,7 +297,7 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   function editProfilePage(player){
     let newForm = `<form id="edit-form">
       <div class="container">
-        <h1>Edit</h1>
+        <h1 style="color: white;">Edit</h1>
         <hr>
 
         <label for="email"><b>Email</b></label>
@@ -345,11 +352,11 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
   function displayLeaderBoards(players){
     let leaderboard = document.getElementsByClassName('leaderboard')[0]
     leaderboard.innerHTML = `<table class="leaderTable" id="leaderTable" style="color:blue;">
-      <th class="table-head">Rank</th>
-      <th class="table-head">Username</th>
-      <th class="table-head">Win Percentage</th>
-      <th class="table-head">Games Won</th>
-      <th class="table-head">Games Lost</th>
+      <th class="table-head" style="color: white;">Rank</th>
+      <th class="table-head" style="color: white;">Username</th>
+      <th class="table-head" style="color: white;">Win Percentage</th>
+      <th class="table-head" style="color: white;">Games Won</th>
+      <th class="table-head" style="color: white;">Games Lost</th>
     </table>`
 
     let leaderTable = document.getElementById('leaderTable')
