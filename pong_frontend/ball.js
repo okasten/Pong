@@ -1,5 +1,5 @@
-function Ball(scorecard, leftPaddle, rightPaddle){
 
+function Ball(scorecard, leftPaddle, rightPaddle){
   this.x = width/2
   this.y = height/2
   this.radius = 10
@@ -39,9 +39,16 @@ function Ball(scorecard, leftPaddle, rightPaddle){
 
       if(document.getElementById('player2score') != null){
         let player2score = document.getElementById('player2score').innerText
-        if(parseInt(player2score) < 15){
+        if(parseInt(player2score) < 5){
             document.getElementById('player2score').innerText = `${parseInt(++player2score)}`
         } else {
+
+          let data = document.getElementById('player1score').dataset
+          let player2score = document.getElementById('player2score').innerText
+          let playerOneScore = document.getElementById('player1score').innerText
+          document.getElementById('player1score').innerText = 0
+          document.getElementById('player2score').innerText = 0
+          postScore(data, parseInt(playerOneScore), parseInt(player2score))
 
         }
       }
@@ -49,21 +56,20 @@ function Ball(scorecard, leftPaddle, rightPaddle){
     } else{
       if(document.getElementById('player1score') != null){
         let player1score = document.getElementById('player1score').innerText
-        if(parseInt(player1score) < 15){
+        if(parseInt(player1score) < 5){
           document.getElementById('player1score').innerText = `${parseInt(++player1score)}`
         } else {
 
           let data = document.getElementById('player1score').dataset
           let player2score = document.getElementById('player2score').innerText
-          postScore(data, parseInt(player1score), parseInt(player2score))
+          let playerOneScore = document.getElementById('player1score').innerText
+          document.getElementById('player1score').innerText = 0
+          document.getElementById('player2score').innerText = 0
+          postScore(data, parseInt(playerOneScore), parseInt(player2score))
         }
       }
     }
   }
-
-  this.receingIndex = (e =>{
-    debugger
-  })
 
   function postScore(playerData, player1score, player2score){
     let data = {ballspeed: 8, winner: playerData.username, p1_score: player1score, p2_score: player2score, points_to_win: 15}
@@ -73,14 +79,47 @@ function Ball(scorecard, leftPaddle, rightPaddle){
         'Content-Type' : 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(console.log)
+    }).then(response => response.json()).then(e => updateGames(e, playerData.id))
 
   }
 
-  function breakhere(event) {
+  function updateGames(event, playerId) {
+    let leaderboardButton = document.getElementById('leaderboard')
+    leaderboardButton.click()
+    let data = {game_id: event.id, player_id: playerId}
+    playerGamesWon(playerId).then((e)=>{
 
+      let playerWinScore= e.games_won
+      let newScore = parseInt(++playerWinScore)
+      let playerLossScore = e.games_lost
+      let lossScore = parseInt(++playerLossScore)
 
+    fetch(`http://localhost:3000/players/${playerId}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({
+        "games_won": newScore
+      })
+    }).then(res => res.json())
+
+    fetch("http://localhost:3000/player_games", {
+      method: "POST",
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(res => res.json())
+
+  })
   }
+
+  function playerGamesWon(id){
+    return fetch(`http://localhost:3000/players/${id}`)
+    .then(response => response.json())
+  }
+
 
 
   // if(ellx >= rectx && ellx <= rectx+rectw+2 && elly >= recty-25 && elly <= recty+15){

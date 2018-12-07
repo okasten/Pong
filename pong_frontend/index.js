@@ -95,7 +95,7 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
 
   function playerShowPage(player){
     reset()
-    if(player.games === null || player.games.length === 0){
+    if(player.games === null || player.games.length === 0 || player.games === undefined){
       reset()
       document.getElementsByClassName('stats')[0].innerHTML = `<h1>No Previously Played Games</h1>`
     } else {
@@ -241,8 +241,8 @@ function Index(leftPaddle, rightPaddle, ball, scorecard){
       getFullFetch()
     } else if(e.target.id === "home"){
       reset()
-      PLAYER_CONFIG.leftPaddle = true
-      PLAYER_CONFIG.rightPaddle = true
+      PLAYER_ONE = true
+      PLAYER_TWO = true
       this.grabCanvas(true)
     } else if(e.target.id === "profile"){
       this.grabCanvas(false)

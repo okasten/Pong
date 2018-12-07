@@ -6,6 +6,20 @@ class PlayersController < ApplicationController
     render json: @players
   end
 
+  def singleplayerinfo
+    @player = Player.find(params[:id])
+    render json: @player
+  end
+
+  def updateScore
+
+    @player = Player.find(params[:id])
+    # byebug
+    @player.update(games_won_params)
+    render json: @player
+
+  end
+
   def create
     @player = Player.create(player_params)
     render json: @player
@@ -26,6 +40,14 @@ class PlayersController < ApplicationController
   end
 
   private
+
+  def games_won_params
+    params.require(:player).permit(:games_won, :games_lost)
+  end
+
+  def player_id_params
+    params.permit(:id)
+  end
 
   def player_params
     params.require(:player).permit(:username, :name, :email)

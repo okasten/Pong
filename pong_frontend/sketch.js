@@ -41,7 +41,7 @@ function draw() {
 	// leftPaddle.aiPlayer(ball, PLAYER_CONFIG.leftPaddle)
 	rightPaddle.aiPlayer(ball, PLAYER_ONE)
 	leftPaddle.aiPlayer(ball, PLAYER_TWO)
-	ball.receingIndex(index)
+	//ball.recIndex(index)
 	// frameRate(10)
 	for(let i = 0; i < leftPaddle.movingLeft.length; i++){
 		leftPaddle.moveLeftPaddle(leftPaddle.movingLeft[i])
