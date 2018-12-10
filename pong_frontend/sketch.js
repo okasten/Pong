@@ -3,7 +3,7 @@ var rightPaddle
 var ball
 var keyLeft
 var index
-var scorecard
+var scorecard 
 // var p5 = require(['libraries/p5'])
 
 function preload(){
